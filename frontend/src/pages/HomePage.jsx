@@ -1,6 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import LaserOpticsCanvas from "../components/simulator/LaserOpticsCanvas";
 
+// Navigation & Sector Data for LBLFIBEBL
 const sectorsData = [
   { name: "Photonics", link: "applications", image: "https://raith.com/wp-content/uploads/2024/07/photonics-thumb.jpg" },
   { name: "Semiconductors", link: "applications", image: "https://raith.com/wp-content/uploads/2024/07/semiconductors-thumb.jpg" },
@@ -9,18 +10,18 @@ const sectorsData = [
 ];
 
 const solutionsData = [
-  { name: "Holography Workflow", link: "applications", desc: "From initial design to final product – solution for holography showcasing unique capabilities at every stage." },
-  { name: "Digital LBLFIBEBL", link: "designer", desc: "Mature software engineering for seamless integration, efficient task support, and user-friendly operation." },
-  { name: "Process Control", link: "basics", desc: "Revolutionize nanofabrication quality management, enable extensive data acquisition at the nanoscale, and beyond." },
-  { name: "Mix and Match", link: "benefits", desc: "Seamless blending of laser direct writing, ion beam, and electron beam technologies, unlocking new nanostructuring horizons." },
-  { name: "Patterning", link: "functions", desc: "By eliminating stitching errors, our solution guarantees optimal performance and reliability, driving breakthroughs." },
+  { name: "Holography Workflow", link: "applications", icon: "/icons/holography.svg", desc: "From initial design to final product – solution for holography showcasing unique capabilities at every stage." },
+  { name: "Digital LBLFIBEBL", link: "designer", icon: "/icons/digital-raith.svg", desc: "Mature software engineering for seamless integration, efficient task support, and user-friendly operation." },
+  { name: "Process Control", link: "basics", icon: "/icons/process-control.svg", desc: "Revolutionize nanofabrication quality management, enable extensive data acquisition at the nanoscale, and beyond." },
+  { name: "Mix and Match", link: "benefits", icon: "/icons/mix-and-match.svg", desc: "Seamless blending of laser direct writing, ion beam, and electron beam technologies, unlocking new nanostructuring horizons." },
+  { name: "Patterning", link: "functions", icon: "/icons/patterning.svg", desc: "By eliminating stitching errors, our solution guarantees optimal performance and reliability, driving breakthroughs." },
 ];
 
 const newsData = [
   { date: "June 23, 2026", title: "Introducing the new LBLFIBEBL Experience Center Europe", link: "who-we-are" },
   { date: "May 8, 2026", title: "Grand Opening of the LBLFIBEBL Experience Center Europe in Berlin", link: "who-we-are" },
   { date: "March 10, 2026", title: "Unlock the full nanopatterning potential of your SEM or FIB-SEM with LBLFIBEBL v5.2", link: "changelog" },
-  { date: "December 23, 2025", title: "Extraordinary Micrograph Award 2025 Winners", link: "who-we-are" },
+  { date: "December 23, 2025", title: "Extraordinary LBLFIBEBL Micrograph Award 2025 Winners", link: "who-we-are" },
 ];
 
 const referencesData = [
@@ -65,15 +66,23 @@ export const HomePageComponent = ({ onNavigate, openTrialModal, openCheckoutModa
     },
   ];
 
+  // Auto-play hero slider
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
   return (
     <div className="home-page bg-white font-sans text-slate-900">
       
       {/* ===== HERO SLIDER ===== */}
-      <section className="hero-slider relative min-h-[500px] bg-gradient-to-r from-slate-950 via-slate-900 to-blue-950 text-white py-20 overflow-hidden">
+      <section className="hero-slider relative min-h-[520px] bg-gradient-to-r from-slate-950 via-slate-900 to-blue-950 text-white py-20 overflow-hidden">
         <div className="container-custom relative z-10">
           <div className="max-w-3xl space-y-6">
             <span className="inline-block px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
-              LBLFIBEBL Nanofabrication Platform
+              LBLFIBEBL Nanofabrication Engine v5.2
             </span>
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
               {slides[activeSlide].title}
@@ -105,8 +114,8 @@ export const HomePageComponent = ({ onNavigate, openTrialModal, openCheckoutModa
               <button
                 key={idx}
                 onClick={() => setActiveSlide(idx)}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  idx === activeSlide ? "bg-cyan-400 scale-125" : "bg-white/40 hover:bg-white/70"
+                className={`w-3.5 h-3.5 rounded-full transition-all ${
+                  idx === activeSlide ? "bg-cyan-400 scale-125 shadow-lg shadow-cyan-400/50" : "bg-white/40 hover:bg-white/70"
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
