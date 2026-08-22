@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Globe, User, LogOut, Menu, X, ChevronDown, Sparkles, Shield, Cpu, Zap, Layers } from 'lucide-react';
+import { Search, User, LogOut, Menu, X, ChevronDown, Shield, Zap } from 'lucide-react';
 
 export const Header = ({
   user,
@@ -13,10 +13,6 @@ export const Header = ({
   const [lang, setLang] = useState('EN');
   const [activeDropdown, setActiveDropdown] = useState(null);
 
-  const toggleDropdown = (name) => {
-    setActiveDropdown(activeDropdown === name ? null : name);
-  };
-
   const handleNav = (route) => {
     onNavigate(route);
     setMobileMenuOpen(false);
@@ -24,18 +20,17 @@ export const Header = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full raith-header-glass border-b border-gray-800/80 transition-all duration-300">
-      {/* Top Utility Bar */}
+    <header className="sticky top-0 z-50 w-full bg-white text-[#151521] border-b border-gray-200 shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Brand Logo - LBLFIBEBL (Raith Clone Style) */}
+          {/* Brand Logo - LBLFIBEBL (Clean White Header Style) */}
           <button
             onClick={() => handleNav('home')}
-            className="flex items-center gap-3 group text-left focus:outline-none"
+            className="flex items-center gap-2.5 group text-left focus:outline-none flex-shrink-0"
           >
             {/* Geometric Optical Icon */}
-            <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 via-blue-600 to-indigo-700 shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-200">
+            <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-cyan-600 to-indigo-700 shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
               <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="3" y1="12" x2="21" y2="12" />
                 <path d="M12 3l9 9-9 9" />
@@ -43,28 +38,28 @@ export const Header = ({
               </svg>
             </div>
             <div>
-              <span className="text-2xl sm:text-3xl font-extrabold tracking-widest text-white uppercase font-sans">
-                LBL<span className="text-cyan-400">FIB</span>EBL
+              <span className="text-xl sm:text-2xl font-extrabold tracking-wider text-[#151521] uppercase font-sans">
+                LBL<span className="text-[#0066FF]">FIB</span>EBL
               </span>
-              <span className="block text-[10px] uppercase font-semibold text-cyan-300/80 tracking-widest">
+              <span className="block text-[9px] uppercase font-bold text-[#0066FF] tracking-widest">
                 Nano & Physics Engine
               </span>
             </div>
           </button>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden xl:flex items-center space-x-1 font-medium text-sm">
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 font-medium text-xs xl:text-sm max-w-full overflow-hidden">
             
             {/* Sectors Dropdown */}
             <div className="relative group" onMouseEnter={() => setActiveDropdown('sectors')} onMouseLeave={() => setActiveDropdown(null)}>
               <button
                 onClick={() => handleNav('applications')}
-                className="px-3.5 py-2 text-gray-200 hover:text-cyan-400 font-semibold tracking-wide flex items-center gap-1 transition-colors"
+                className="px-2.5 py-2 text-slate-800 hover:text-[#0066FF] font-semibold tracking-tight flex items-center gap-1 transition-colors"
               >
-                Sectors <ChevronDown className="w-3.5 h-3.5 text-gray-400 group-hover:text-cyan-400" />
+                Sectors <ChevronDown className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#0066FF]" />
               </button>
               {activeDropdown === 'sectors' && (
-                <div className="absolute top-full left-0 w-64 bg-gray-900/95 border border-gray-800 rounded-xl shadow-2xl p-2 animate-fade-in backdrop-blur-xl">
+                <div className="absolute top-full left-0 w-60 bg-white border border-gray-200 rounded-xl shadow-2xl p-2 animate-fade-in">
                   {[
                     'Optical Telecommunication',
                     'Semiconductors',
@@ -79,7 +74,7 @@ export const Header = ({
                     <button
                       key={idx}
                       onClick={() => handleNav('applications')}
-                      className="w-full text-left px-3 py-2 text-xs text-gray-300 hover:text-cyan-300 hover:bg-gray-800/80 rounded-lg transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs text-slate-700 hover:text-[#0066FF] hover:bg-slate-50 rounded-lg transition-colors font-medium"
                     >
                       {item}
                     </button>
@@ -92,12 +87,12 @@ export const Header = ({
             <div className="relative group" onMouseEnter={() => setActiveDropdown('solutions')} onMouseLeave={() => setActiveDropdown(null)}>
               <button
                 onClick={() => handleNav('functions')}
-                className="px-3.5 py-2 text-gray-200 hover:text-cyan-400 font-semibold tracking-wide flex items-center gap-1 transition-colors"
+                className="px-2.5 py-2 text-slate-800 hover:text-[#0066FF] font-semibold tracking-tight flex items-center gap-1 transition-colors"
               >
-                Solutions <ChevronDown className="w-3.5 h-3.5 text-gray-400 group-hover:text-cyan-400" />
+                Solutions <ChevronDown className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#0066FF]" />
               </button>
               {activeDropdown === 'solutions' && (
-                <div className="absolute top-full left-0 w-56 bg-gray-900/95 border border-gray-800 rounded-xl shadow-2xl p-2 animate-fade-in backdrop-blur-xl">
+                <div className="absolute top-full left-0 w-56 bg-white border border-gray-200 rounded-xl shadow-2xl p-2 animate-fade-in">
                   {[
                     { name: 'Patterning', route: 'functions' },
                     { name: 'Mix and Match', route: 'benefits' },
@@ -108,7 +103,7 @@ export const Header = ({
                     <button
                       key={idx}
                       onClick={() => handleNav(sol.route)}
-                      className="w-full text-left px-3 py-2 text-xs text-gray-300 hover:text-cyan-300 hover:bg-gray-800/80 rounded-lg transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs text-slate-700 hover:text-[#0066FF] hover:bg-slate-50 rounded-lg transition-colors font-medium"
                     >
                       {sol.name}
                     </button>
@@ -121,12 +116,12 @@ export const Header = ({
             <div className="relative group" onMouseEnter={() => setActiveDropdown('products')} onMouseLeave={() => setActiveDropdown(null)}>
               <button
                 onClick={() => handleNav('shop')}
-                className="px-3.5 py-2 text-gray-200 hover:text-cyan-400 font-semibold tracking-wide flex items-center gap-1 transition-colors"
+                className="px-2.5 py-2 text-slate-800 hover:text-[#0066FF] font-semibold tracking-tight flex items-center gap-1 transition-colors"
               >
-                Products <ChevronDown className="w-3.5 h-3.5 text-gray-400 group-hover:text-cyan-400" />
+                Products <ChevronDown className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#0066FF]" />
               </button>
               {activeDropdown === 'products' && (
-                <div className="absolute top-full left-0 w-64 bg-gray-900/95 border border-gray-800 rounded-xl shadow-2xl p-2 animate-fade-in backdrop-blur-xl">
+                <div className="absolute top-full left-0 w-60 bg-white border border-gray-200 rounded-xl shadow-2xl p-2 animate-fade-in">
                   {[
                     { name: 'Electron Beam Lithography (EBL)', route: 'shop' },
                     { name: 'Focused Ion Beams (FIB)', route: 'shop' },
@@ -136,7 +131,7 @@ export const Header = ({
                     <button
                       key={idx}
                       onClick={() => handleNav(prod.route)}
-                      className="w-full text-left px-3 py-2 text-xs text-gray-300 hover:text-cyan-300 hover:bg-gray-800/80 rounded-lg transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs text-slate-700 hover:text-[#0066FF] hover:bg-slate-50 rounded-lg transition-colors font-medium"
                     >
                       {prod.name}
                     </button>
@@ -147,72 +142,72 @@ export const Header = ({
 
             <button
               onClick={() => handleNav('who-we-are')}
-              className="px-3.5 py-2 text-gray-200 hover:text-cyan-400 font-semibold tracking-wide transition-colors"
+              className="px-2.5 py-2 text-slate-800 hover:text-[#0066FF] font-semibold tracking-tight transition-colors"
             >
               Technologies
             </button>
 
             <button
               onClick={() => handleNav('support')}
-              className="px-3.5 py-2 text-gray-200 hover:text-cyan-400 font-semibold tracking-wide transition-colors"
+              className="px-2.5 py-2 text-slate-800 hover:text-[#0066FF] font-semibold tracking-tight transition-colors"
             >
               Services
             </button>
 
             <button
               onClick={() => handleNav('who-we-are')}
-              className="px-3.5 py-2 text-gray-200 hover:text-cyan-400 font-semibold tracking-wide transition-colors"
+              className="px-2.5 py-2 text-slate-800 hover:text-[#0066FF] font-semibold tracking-tight transition-colors"
             >
               Company
             </button>
 
-            {/* DESIGNER (Interactive Simulator Engine) */}
+            {/* DESIGNER Engine */}
             <button
               onClick={() => handleNav('designer')}
-              className={`px-4 py-2 rounded-xl font-bold tracking-wide flex items-center gap-1.5 transition-all shadow-md ${
+              className={`px-3 py-1.5 rounded-lg font-bold tracking-tight flex items-center gap-1 transition-all shadow-sm ${
                 activeRoute === 'designer'
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-cyan-500/25'
-                  : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20'
+                  ? 'bg-[#0066FF] text-white'
+                  : 'bg-blue-50 text-[#0066FF] border border-blue-200 hover:bg-blue-100'
               }`}
             >
-              <Zap className="w-4 h-4" /> DESIGNER
+              <Zap className="w-3.5 h-3.5" /> DESIGNER
             </button>
 
             {/* Admin Console Link */}
             <button
               onClick={() => handleNav('admin')}
-              className="px-3 py-2 text-amber-400 hover:text-amber-300 font-semibold text-xs flex items-center gap-1 bg-amber-500/10 border border-amber-500/20 rounded-lg transition-all"
+              className="px-2.5 py-1.5 text-amber-700 hover:text-amber-800 font-semibold text-xs flex items-center gap-1 bg-amber-50 border border-amber-200 rounded-lg transition-all"
             >
               <Shield className="w-3.5 h-3.5" /> Admin 🛡️
             </button>
           </nav>
 
           {/* Right Utility Buttons (Search, Language, User Auth) */}
-          <div className="hidden sm:flex items-center space-x-3">
+          <div className="hidden sm:flex items-center space-x-2 flex-shrink-0">
             
-            {/* Quick Search Modal Button */}
+            {/* Quick Search Button */}
             <button
               onClick={openSearchModal}
-              className="p-2.5 rounded-xl bg-gray-800/80 border border-gray-700 text-gray-300 hover:text-white hover:border-gray-600 transition-all"
+              className="p-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 hover:text-[#0066FF] hover:border-slate-300 transition-all"
               title="Global Search"
             >
               <Search className="w-4 h-4" />
             </button>
 
             {/* Language Switcher Pill */}
-            <div className="flex bg-gray-800/80 border border-gray-700 rounded-xl p-1 text-xs font-semibold">
+            <div className="flex bg-slate-100 border border-slate-200 rounded-xl p-1 text-xs font-semibold">
               <button
                 onClick={() => setLang('DE')}
-                className={`px-2 py-1 rounded-lg transition-colors ${
-                  lang === 'DE' ? 'bg-cyan-500 text-white' : 'text-gray-400 hover:text-white'
+                className={`px-2 py-0.5 rounded-lg transition-colors ${
+                  lang === 'DE' ? 'bg-[#0066FF] text-white' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 DE
               </button>
               <button
                 onClick={() => setLang('EN')}
-                className={`px-2 py-1 rounded-lg transition-colors ${
-                  lang === 'EN' ? 'bg-cyan-500 text-white' : 'text-gray-400 hover:text-white'
+                className={`px-2 py-0.5 rounded-lg transition-colors ${
+                  lang === 'EN' ? 'bg-[#0066FF] text-white' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 EN
@@ -222,16 +217,13 @@ export const Header = ({
             {/* User Auth Widget */}
             {user ? (
               <div className="flex items-center gap-2">
-                <div className="px-3 py-1.5 rounded-xl bg-gray-800 border border-gray-700 text-xs font-medium text-cyan-300 flex items-center gap-2">
-                  <User className="w-3.5 h-3.5 text-cyan-400" />
+                <div className="px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-medium text-slate-800 flex items-center gap-1.5">
+                  <User className="w-3.5 h-3.5 text-[#0066FF]" />
                   <span>{user.name || user.email}</span>
-                  <span className="text-[10px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded font-bold uppercase">
-                    {user.plan || 'PRO'}
-                  </span>
                 </div>
                 <button
                   onClick={onLogout}
-                  className="px-3 py-1.5 rounded-xl bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/30 text-xs font-semibold transition-all flex items-center gap-1"
+                  className="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-200 text-xs font-semibold transition-all flex items-center gap-1"
                 >
                   <LogOut className="w-3.5 h-3.5" /> Logout
                 </button>
@@ -239,7 +231,7 @@ export const Header = ({
             ) : (
               <button
                 onClick={openAuthModal}
-                className="px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-blue-600/20 transition-all"
+                className="px-4 py-2 bg-[#0066FF] hover:bg-[#0052cc] text-white font-semibold text-xs rounded-xl shadow-sm transition-all"
               >
                 Sign In / Register
               </button>
@@ -247,16 +239,16 @@ export const Header = ({
           </div>
 
           {/* Mobile Menu Toggle Button */}
-          <div className="flex xl:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-2">
             <button
               onClick={openSearchModal}
-              className="p-2 rounded-lg bg-gray-800 text-gray-300"
+              className="p-2 rounded-lg bg-slate-100 text-slate-700"
             >
               <Search className="w-5 h-5" />
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-gray-800 border border-gray-700 text-gray-200 hover:text-white"
+              className="p-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-800 hover:text-[#0066FF]"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -266,56 +258,56 @@ export const Header = ({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="xl:hidden bg-gray-900 border-b border-gray-800 px-4 pt-3 pb-6 space-y-3 animate-fade-in">
+        <div className="lg:hidden bg-white border-b border-gray-200 px-4 pt-3 pb-6 space-y-3 shadow-lg">
           <div className="grid grid-cols-2 gap-2 text-xs">
             <button
               onClick={() => handleNav('home')}
-              className="p-2.5 rounded-lg bg-gray-800/80 text-left text-white font-medium"
+              className="p-2.5 rounded-lg bg-slate-100 text-left text-slate-900 font-medium"
             >
               Home
             </button>
             <button
               onClick={() => handleNav('designer')}
-              className="p-2.5 rounded-lg bg-cyan-500/20 border border-cyan-500/30 text-left text-cyan-300 font-bold flex items-center gap-1"
+              className="p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-left text-[#0066FF] font-bold flex items-center gap-1"
             >
               <Zap className="w-3.5 h-3.5" /> DESIGNER Engine
             </button>
             <button
               onClick={() => handleNav('applications')}
-              className="p-2.5 rounded-lg bg-gray-800/80 text-left text-gray-300 font-medium"
+              className="p-2.5 rounded-lg bg-slate-100 text-left text-slate-800 font-medium"
             >
               Sectors & Solutions
             </button>
             <button
               onClick={() => handleNav('shop')}
-              className="p-2.5 rounded-lg bg-gray-800/80 text-left text-gray-300 font-medium"
+              className="p-2.5 rounded-lg bg-slate-100 text-left text-slate-800 font-medium"
             >
               Products & EBL/FIB
             </button>
             <button
               onClick={() => handleNav('who-we-are')}
-              className="p-2.5 rounded-lg bg-gray-800/80 text-left text-gray-300 font-medium"
+              className="p-2.5 rounded-lg bg-slate-100 text-left text-slate-800 font-medium"
             >
               Company / About Us
             </button>
             <button
               onClick={() => handleNav('support')}
-              className="p-2.5 rounded-lg bg-gray-800/80 text-left text-gray-300 font-medium"
+              className="p-2.5 rounded-lg bg-slate-100 text-left text-slate-800 font-medium"
             >
               Services & Handbook
             </button>
             <button
               onClick={() => handleNav('admin')}
-              className="p-2.5 rounded-lg bg-amber-500/20 border border-amber-500/30 text-left text-amber-300 font-bold flex items-center gap-1 col-span-2"
+              className="p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-left text-amber-800 font-bold flex items-center gap-1 col-span-2"
             >
               <Shield className="w-4 h-4" /> Admin Console 🛡️
             </button>
           </div>
 
-          <div className="pt-3 border-t border-gray-800 flex items-center justify-between">
+          <div className="pt-3 border-t border-slate-200 flex items-center justify-between">
             {user ? (
               <div className="flex items-center justify-between w-full">
-                <span className="text-xs text-gray-300 font-medium">{user.email}</span>
+                <span className="text-xs text-slate-800 font-medium">{user.email}</span>
                 <button
                   onClick={onLogout}
                   className="px-3 py-1.5 rounded-lg bg-rose-600 text-white text-xs font-semibold"
@@ -329,7 +321,7 @@ export const Header = ({
                   setMobileMenuOpen(false);
                   openAuthModal();
                 }}
-                className="w-full py-2.5 bg-cyan-600 text-white font-semibold text-xs rounded-xl text-center"
+                className="w-full py-2.5 bg-[#0066FF] text-white font-semibold text-xs rounded-xl text-center"
               >
                 Sign In / Register Account
               </button>
