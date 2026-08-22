@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ToastProvider } from './context/ToastContext';
+import { LanguageProvider } from './context/LanguageContext';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import AuthModal from './components/common/AuthModal';
@@ -224,8 +225,10 @@ function MainAppContent() {
 
 export default function App() {
   return (
-    <ToastProvider>
-      <MainAppContent />
-    </ToastProvider>
+    <LanguageProvider>
+      <ToastProvider>
+        <MainAppContent />
+      </ToastProvider>
+    </LanguageProvider>
   );
 }

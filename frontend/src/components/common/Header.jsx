@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Search, User, LogOut, Menu, X, ChevronDown, Zap } from 'lucide-react';
+import { Search, User, LogOut, Menu, X, ChevronDown, Zap, Globe } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const Header = ({
   user,
@@ -10,13 +11,20 @@ export const Header = ({
   onNavigate,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [lang, setLang] = useState('EN');
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const { lang, changeLanguage, t } = useLanguage();
 
   const handleNav = (route) => {
     onNavigate(route);
     setMobileMenuOpen(false);
     setActiveDropdown(null);
+  };
+
+  const languageLabels = {
+    EN: 'EN',
+    DE: 'DE',
+    ZH: '中文',
+    JA: '日本語'
   };
 
   return (
@@ -56,7 +64,7 @@ export const Header = ({
                 onClick={() => handleNav('applications')}
                 className="px-2.5 py-2 text-slate-800 hover:text-[#0066FF] font-semibold tracking-tight flex items-center gap-1 transition-colors"
               >
-                Sectors <ChevronDown className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#0066FF]" />
+                {t('sectors')} <ChevronDown className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#0066FF]" />
               </button>
               {activeDropdown === 'sectors' && (
                 <div className="absolute top-full left-0 w-60 bg-white border border-gray-200 rounded-xl shadow-2xl p-2 animate-fade-in">
@@ -89,14 +97,14 @@ export const Header = ({
                 onClick={() => handleNav('functions')}
                 className="px-2.5 py-2 text-slate-800 hover:text-[#0066FF] font-semibold tracking-tight flex items-center gap-1 transition-colors"
               >
-                Solutions <ChevronDown className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#0066FF]" />
+                {t('solutions')} <ChevronDown className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#0066FF]" />
               </button>
               {activeDropdown === 'solutions' && (
                 <div className="absolute top-full left-0 w-56 bg-white border border-gray-200 rounded-xl shadow-2xl p-2 animate-fade-in">
                   {[
-                    { name: 'Patterning', route: 'functions' },
-                    { name: 'Mix and Match', route: 'benefits' },
-                    { name: 'Process Control', route: 'basics' },
+                    { name: t('patterning'), route: 'functions' },
+                    { name: t('mixAndMatch'), route: 'benefits' },
+                    { name: t('processControl'), route: 'basics' },
                     { name: 'Digital LBLFIBEBL', route: 'designer' },
                     { name: 'Holography Workflow', route: 'applications' }
                   ].map((sol, idx) => (
@@ -118,7 +126,7 @@ export const Header = ({
                 onClick={() => handleNav('shop')}
                 className="px-2.5 py-2 text-slate-800 hover:text-[#0066FF] font-semibold tracking-tight flex items-center gap-1 transition-colors"
               >
-                Products <ChevronDown className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#0066FF]" />
+                {t('products')} <ChevronDown className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#0066FF]" />
               </button>
               {activeDropdown === 'products' && (
                 <div className="absolute top-full left-0 w-60 bg-white border border-gray-200 rounded-xl shadow-2xl p-2 animate-fade-in">
@@ -144,24 +152,24 @@ export const Header = ({
               onClick={() => handleNav('who-we-are')}
               className="px-2.5 py-2 text-slate-800 hover:text-[#0066FF] font-semibold tracking-tight transition-colors"
             >
-              Technologies
+              {t('technologies')}
             </button>
 
             <button
               onClick={() => handleNav('support')}
               className="px-2.5 py-2 text-slate-800 hover:text-[#0066FF] font-semibold tracking-tight transition-colors"
             >
-              Services
+              {t('services')}
             </button>
 
             <button
               onClick={() => handleNav('who-we-are')}
               className="px-2.5 py-2 text-slate-800 hover:text-[#0066FF] font-semibold tracking-tight transition-colors"
             >
-              Company
+              {t('company')}
             </button>
 
-            {/* DESIGNER Engine (Premium Page) */}
+            {/* DESIGNER Engine */}
             <button
               onClick={() => handleNav('designer')}
               className={`px-3.5 py-1.5 rounded-lg font-bold tracking-tight flex items-center gap-1 transition-all shadow-sm ${
@@ -170,7 +178,7 @@ export const Header = ({
                   : 'bg-blue-50 text-[#0066FF] border border-blue-200 hover:bg-blue-100'
               }`}
             >
-              <Zap className="w-3.5 h-3.5" /> DESIGNER
+              <Zap className="w-3.5 h-3.5" /> {t('designer')}
             </button>
           </nav>
 
@@ -181,29 +189,25 @@ export const Header = ({
             <button
               onClick={openSearchModal}
               className="p-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 hover:text-[#0066FF] hover:border-slate-300 transition-all"
-              title="Global Search"
+              title={t('search')}
             >
               <Search className="w-4 h-4" />
             </button>
 
-            {/* Language Switcher Pill */}
-            <div className="flex bg-slate-100 border border-slate-200 rounded-xl p-1 text-xs font-semibold">
-              <button
-                onClick={() => setLang('DE')}
-                className={`px-2 py-0.5 rounded-lg transition-colors ${
-                  lang === 'DE' ? 'bg-[#0066FF] text-white' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                DE
-              </button>
-              <button
-                onClick={() => setLang('EN')}
-                className={`px-2 py-0.5 rounded-lg transition-colors ${
-                  lang === 'EN' ? 'bg-[#0066FF] text-white' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                EN
-              </button>
+            {/* Language Switcher Pill (EN, DE, ZH, JA) */}
+            <div className="flex bg-slate-100 border border-slate-200 rounded-xl p-1 text-xs font-semibold gap-0.5">
+              {['EN', 'DE', 'ZH', 'JA'].map((l) => (
+                <button
+                  key={l}
+                  onClick={() => changeLanguage(l)}
+                  className={`px-2 py-0.5 rounded-lg transition-colors ${
+                    lang === l ? 'bg-[#0066FF] text-white font-bold' : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                  title={`Switch language to ${languageLabels[l]}`}
+                >
+                  {languageLabels[l]}
+                </button>
+              ))}
             </div>
 
             {/* User Auth Widget */}
@@ -217,7 +221,7 @@ export const Header = ({
                   onClick={onLogout}
                   className="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-200 text-xs font-semibold transition-all flex items-center gap-1"
                 >
-                  <LogOut className="w-3.5 h-3.5" /> Logout
+                  <LogOut className="w-3.5 h-3.5" /> {t('logout')}
                 </button>
               </div>
             ) : (
@@ -225,7 +229,7 @@ export const Header = ({
                 onClick={openAuthModal}
                 className="px-4 py-2 bg-[#0066FF] hover:bg-[#0052cc] text-white font-semibold text-xs rounded-xl shadow-sm transition-all"
               >
-                Sign In / Register
+                {t('signIn')}
               </button>
             )}
           </div>
@@ -251,6 +255,27 @@ export const Header = ({
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-b border-gray-200 px-4 pt-3 pb-6 space-y-3 shadow-lg">
+          
+          {/* Mobile Language Switcher */}
+          <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+            <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
+              <Globe className="w-3.5 h-3.5" /> Language
+            </span>
+            <div className="flex bg-slate-100 border border-slate-200 rounded-xl p-0.5 text-xs font-semibold gap-1">
+              {['EN', 'DE', 'ZH', 'JA'].map((l) => (
+                <button
+                  key={l}
+                  onClick={() => changeLanguage(l)}
+                  className={`px-2 py-0.5 rounded-lg transition-colors ${
+                    lang === l ? 'bg-[#0066FF] text-white font-bold' : 'text-slate-600'
+                  }`}
+                >
+                  {languageLabels[l]}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 gap-2 text-xs">
             <button
               onClick={() => handleNav('home')}
@@ -262,31 +287,31 @@ export const Header = ({
               onClick={() => handleNav('designer')}
               className="p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-left text-[#0066FF] font-bold flex items-center gap-1"
             >
-              <Zap className="w-3.5 h-3.5" /> DESIGNER Engine
+              <Zap className="w-3.5 h-3.5" /> {t('designer')} Engine
             </button>
             <button
               onClick={() => handleNav('applications')}
               className="p-2.5 rounded-lg bg-slate-100 text-left text-slate-800 font-medium"
             >
-              Sectors & Solutions
+              {t('sectors')} & {t('solutions')}
             </button>
             <button
               onClick={() => handleNav('shop')}
               className="p-2.5 rounded-lg bg-slate-100 text-left text-slate-800 font-medium"
             >
-              Products & EBL/FIB
+              {t('products')} & EBL/FIB
             </button>
             <button
               onClick={() => handleNav('who-we-are')}
               className="p-2.5 rounded-lg bg-slate-100 text-left text-slate-800 font-medium"
             >
-              Company / About Us
+              {t('company')} / About Us
             </button>
             <button
               onClick={() => handleNav('support')}
               className="p-2.5 rounded-lg bg-slate-100 text-left text-slate-800 font-medium"
             >
-              Services & Handbook
+              {t('services')} & Handbook
             </button>
           </div>
 
@@ -298,7 +323,7 @@ export const Header = ({
                   onClick={onLogout}
                   className="px-3 py-1.5 rounded-lg bg-rose-600 text-white text-xs font-semibold"
                 >
-                  Logout
+                  {t('logout')}
                 </button>
               </div>
             ) : (
@@ -309,7 +334,7 @@ export const Header = ({
                 }}
                 className="w-full py-2.5 bg-[#0066FF] text-white font-semibold text-xs rounded-xl text-center"
               >
-                Sign In / Register Account
+                {t('signIn')}
               </button>
             )}
           </div>
