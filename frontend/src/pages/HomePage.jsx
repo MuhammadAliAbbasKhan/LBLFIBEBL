@@ -1,7 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 import LaserOpticsCanvas from "../components/simulator/LaserOpticsCanvas";
 
-// Navigation & Sector Data for LBLFIBEBL
+// ============================================================================
+// COLOR CONSTANTS
+// ============================================================================
+const PRIMARY_CYAN = "#00D2FF";
+const DARK_BG = "#0B1329";
+const WHITE = "#FFFFFF";
+
+// ============================================================================
+// NAVIGATION & SECTOR DATA
+// ============================================================================
 const sectorsData = [
   { name: "Photonics", link: "applications", image: "https://raith.com/wp-content/uploads/2024/07/photonics-thumb.jpg" },
   { name: "Semiconductors", link: "applications", image: "https://raith.com/wp-content/uploads/2024/07/semiconductors-thumb.jpg" },
@@ -20,8 +33,8 @@ const solutionsData = [
 const newsData = [
   { date: "June 23, 2026", title: "Introducing the new LBLFIBEBL Experience Center Europe", link: "who-we-are" },
   { date: "May 8, 2026", title: "Grand Opening of the LBLFIBEBL Experience Center Europe in Berlin", link: "who-we-are" },
-  { date: "March 10, 2026", title: "Unlock the full nanopatterning potential of your SEM or FIB-SEM with LBLFIBEBL v5.2", link: "changelog" },
-  { date: "December 23, 2025", title: "Extraordinary LBLFIBEBL Micrograph Award 2025 Winners", link: "who-we-are" },
+  { date: "March 10, 2026", title: "Unlock the full nanopatterning potential of your SEM or FIB-SEM with a new LBLFIBEBL engine", link: "changelog" },
+  { date: "December 23, 2025", title: "Extraordinary Micrograph Award 2025 Winners Announced", link: "who-we-are" },
 ];
 
 const referencesData = [
@@ -35,112 +48,144 @@ const referencesData = [
   { name: "ISI Brno", logo: "https://raith.com/wp-content/uploads/2025/01/ISI-BRNO.png" },
 ];
 
-export const HomePageComponent = ({ onNavigate, openTrialModal, openCheckoutModal, user, openAuthModal }) => {
-  const [activeSlide, setActiveSlide] = useState(0);
+// ============================================================================
+// MAIN HOMEPAGE COMPONENT
+// ============================================================================
+export function HomePage({ onNavigate, openTrialModal, openCheckoutModal, user, openAuthModal }) {
+  const [isHeaderInverted, setIsHeaderInverted] = useState(false);
   const videoRef = useRef(null);
 
-  const slides = [
-    {
-      title: "Challenge the frontiers of nanotechnology",
-      subtitle: "LBLFIBEBL enables innovation and industrial implementation of nano devices to advance the digital future.",
-      buttonText: "Vision & Mission",
-      buttonLink: "who-we-are",
-    },
-    {
-      title: "Next generation Nanofabrication",
-      subtitle: "By enabling a wide variety of applications for industry and academia, we advance the digital future.",
-      buttonText: "Semiconductors Sector",
-      buttonLink: "applications",
-    },
-    {
-      title: "Discover upcoming events",
-      subtitle: "Join us on exclusive user events, open webinars, and symposia, as well as industry-leading conferences.",
-      buttonText: "Events & Symposia",
-      buttonLink: "support",
-    },
-    {
-      title: "LBLFIBEBL Micrograph Award 2026",
-      subtitle: "Check out all winning images and be inspired by extraordinary nanofabrication achievements.",
-      buttonText: "Micrograph Award Winners",
-      buttonLink: "who-we-are",
-    },
-  ];
-
-  // Auto-play hero slider
   useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [slides.length]);
+    const handleScroll = () => {
+      const heroSection = document.querySelector(".header-full-height");
+      if (heroSection) {
+        const rect = heroSection.getBoundingClientRect();
+        setIsHeaderInverted(rect.bottom < 0);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div className="home-page bg-white font-sans text-slate-900">
+    <div className="min-h-screen bg-white font-sans text-[#151521]">
       
-      {/* ===== HERO SLIDER ===== */}
-      <section className="hero-slider relative min-h-[520px] bg-gradient-to-r from-slate-950 via-slate-900 to-blue-950 text-white py-20 overflow-hidden">
-        <div className="container-custom relative z-10">
-          <div className="max-w-3xl space-y-6">
-            <span className="inline-block px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
-              LBLFIBEBL Nanofabrication Engine v5.2
-            </span>
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
-              {slides[activeSlide].title}
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300 font-normal leading-relaxed">
-              {slides[activeSlide].subtitle}
-            </p>
-
-            <div className="pt-4 flex flex-wrap items-center gap-4">
-              <button
-                onClick={() => onNavigate && onNavigate(slides[activeSlide].buttonLink)}
-                className="px-8 py-3.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm rounded-none transition-colors shadow-lg shadow-cyan-500/20"
-              >
-                {slides[activeSlide].buttonText}
-              </button>
-
-              <button
-                onClick={() => onNavigate && onNavigate('designer')}
-                className="px-8 py-3.5 bg-transparent border-2 border-white hover:bg-white hover:text-slate-950 text-white font-bold text-sm transition-colors"
-              >
-                Launch 2D Physics Engine
-              </button>
+      {/* ===== HERO SLIDER WITH SWIPER ===== */}
+      <section className="header-full-height relative h-[560px] bg-gradient-to-r from-slate-950 via-slate-900 to-blue-950 text-white">
+        <Swiper
+          modules={[Autoplay, Pagination]}
+          autoplay={{ delay: 4800, disableOnInteraction: true }}
+          pagination={{ clickable: true }}
+          loop={true}
+          className="h-full"
+        >
+          <SwiperSlide>
+            <div className="relative h-full flex items-center max-w-7xl mx-auto px-6">
+              <div className="max-w-2xl text-white">
+                <span className="inline-block px-3 py-1 mb-4 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
+                  LBLFIBEBL Lithography Platform
+                </span>
+                <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                  Challenge the frontiers of nanotechnology
+                </h1>
+                <p className="text-lg md:text-xl mb-8 text-gray-200">
+                  LBLFIBEBL enables innovation and industrial implementation of nano devices to advance the digital future.
+                </p>
+                <button
+                  onClick={() => onNavigate && onNavigate('who-we-are')}
+                  className="px-8 py-3 bg-[#0066FF] hover:bg-[#0052cc] text-white font-semibold transition"
+                >
+                  Vision & Mission
+                </button>
+              </div>
             </div>
-          </div>
+          </SwiperSlide>
 
-          {/* Slider Pagination Dots */}
-          <div className="flex items-center gap-3 mt-12">
-            {slides.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveSlide(idx)}
-                className={`w-3.5 h-3.5 rounded-full transition-all ${
-                  idx === activeSlide ? "bg-cyan-400 scale-125 shadow-lg shadow-cyan-400/50" : "bg-white/40 hover:bg-white/70"
-                }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
-          </div>
-        </div>
+          <SwiperSlide>
+            <div className="relative h-full flex items-center max-w-7xl mx-auto px-6">
+              <div className="max-w-2xl text-white">
+                <span className="inline-block px-3 py-1 mb-4 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
+                  Semiconductors & Quantum Devices
+                </span>
+                <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                  Next generation Nanofabrication
+                </h1>
+                <p className="text-lg md:text-xl mb-8 text-gray-200">
+                  By enabling a wide variety of applications for industry and academia, we advance the digital future.
+                </p>
+                <button
+                  onClick={() => onNavigate && onNavigate('applications')}
+                  className="px-8 py-3 bg-[#0066FF] hover:bg-[#0052cc] text-white font-semibold transition"
+                >
+                  Semiconductors Sector
+                </button>
+              </div>
+            </div>
+          </SwiperSlide>
+
+          <SwiperSlide>
+            <div className="relative h-full flex items-center max-w-7xl mx-auto px-6">
+              <div className="max-w-2xl text-white">
+                <span className="inline-block px-3 py-1 mb-4 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
+                  Events & Symposia 2026
+                </span>
+                <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                  Discover upcoming events & workshops
+                </h1>
+                <p className="text-lg md:text-xl mb-8 text-gray-200">
+                  Join us on exclusive user events, open webinars, and symposia, as well as industry-leading conferences.
+                </p>
+                <button
+                  onClick={() => onNavigate && onNavigate('support')}
+                  className="px-8 py-3 bg-[#0066FF] hover:bg-[#0052cc] text-white font-semibold transition"
+                >
+                  Events & Webinars
+                </button>
+              </div>
+            </div>
+          </SwiperSlide>
+
+          <SwiperSlide>
+            <div className="relative h-full flex items-center max-w-7xl mx-auto px-6">
+              <div className="max-w-2xl text-white">
+                <span className="inline-block px-3 py-1 mb-4 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
+                  Micrograph Awards
+                </span>
+                <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                  Congratulations to LBLFIBEBL Award Winners
+                </h1>
+                <p className="text-lg md:text-xl mb-8 text-gray-200">
+                  Check out all winning images and be inspired by extraordinary nanofabrication achievements.
+                </p>
+                <button
+                  onClick={() => onNavigate && onNavigate('who-we-are')}
+                  className="px-8 py-3 bg-[#0066FF] hover:bg-[#0052cc] text-white font-semibold transition"
+                >
+                  Micrograph Winners
+                </button>
+              </div>
+            </div>
+          </SwiperSlide>
+        </Swiper>
       </section>
 
       {/* ===== 2D PHYSICS CANVAS SIMULATOR ===== */}
       <section className="py-12 bg-slate-950 border-b border-slate-800">
-        <div className="container-custom">
+        <div className="max-w-7xl mx-auto px-6">
           <LaserOpticsCanvas openAuthModal={openAuthModal} user={user} />
         </div>
       </section>
 
-      {/* ===== WELCOME & SECTORS ===== */}
-      <section className="py-16 bg-slate-50">
-        <div className="container-custom space-y-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+      {/* ===== WELCOME + SECTORS ===== */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
             <div>
-              <span className="label-gray">Welcome</span>
+              <span className="text-[#0066FF] font-semibold uppercase text-sm tracking-wider">Welcome</span>
             </div>
             <div className="md:col-span-2">
-              <p className="text-lg text-slate-700 leading-relaxed font-normal">
-                LBLFIBEBL is a global market and technology leader in maskless nanofabrication systems, electron beam lithography, focused ion beam milling, and optical characterization solutions. With our unique combination of high-precision products, integrated solutions, and proprietary physics engines, we drive innovation across industries.
+              <p className="text-lg text-gray-600 leading-relaxed">
+                LBLFIBEBL is the global market and technology leader in maskless nanofabrication systems, electron beam lithography, focused ion beam milling, and laser characterization solutions. With our unique combination of high-precision products, integrated solutions, and proprietary engines, we drive innovation across industries.
               </p>
             </div>
           </div>
@@ -150,21 +195,22 @@ export const HomePageComponent = ({ onNavigate, openTrialModal, openCheckoutModa
               <button
                 key={idx}
                 onClick={() => onNavigate && onNavigate(sector.link)}
-                className="group relative h-56 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 text-left bg-slate-900"
+                className="group relative overflow-hidden aspect-[4/3] rounded-xl text-left bg-slate-900 shadow-md hover:shadow-xl transition"
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent z-10" />
-                <div className="absolute bottom-6 left-6 right-6 z-20 flex justify-between items-center text-white">
-                  <h3 className="text-lg font-bold">{sector.name}</h3>
-                  <span className="text-cyan-400 group-hover:translate-x-1 transition-transform font-bold text-xl">→</span>
+                <img src={sector.image} alt={sector.name} className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#151521]/90 via-[#151521]/30 to-transparent"></div>
+                <div className="absolute bottom-6 left-6 text-white flex items-center justify-between right-6">
+                  <h3 className="text-xl font-bold">{sector.name}</h3>
+                  <span className="text-[#0066FF] group-hover:translate-x-1 transition-transform font-bold text-xl">→</span>
                 </div>
               </button>
             ))}
           </div>
 
-          <div className="text-center pt-4">
+          <div className="text-center mt-8">
             <button
               onClick={() => onNavigate && onNavigate('applications')}
-              className="btn-secondary"
+              className="px-6 py-3 border-2 border-[#151521] hover:bg-[#151521] hover:text-white transition font-semibold"
             >
               Show More Sectors
             </button>
@@ -172,27 +218,24 @@ export const HomePageComponent = ({ onNavigate, openTrialModal, openCheckoutModa
         </div>
       </section>
 
-      {/* ===== ABOUT US & VIDEO ===== */}
-      <section className="py-20 bg-white">
-        <div className="container-custom">
+      {/* ===== ABOUT / VIDEO SECTION ===== */}
+      <section className="py-20 bg-[#F5F5F5]">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <span className="label-gray">About LBLFIBEBL</span>
-              <h2 className="text-4xl font-extrabold text-slate-900 tracking-tight">
-                New Dimensions in Nanofabrication
-              </h2>
-              <p className="text-base text-slate-600 leading-relaxed">
-                LBLFIBEBL empowers innovation in quantum connectivity, semiconductor mobility, green energy, and healthcare with cutting-edge, high-precision tools for research cleanrooms and commercial foundries.
+            <div>
+              <span className="text-[#0066FF] font-semibold uppercase text-sm tracking-wider">About</span>
+              <h2 className="text-4xl md:text-5xl font-extrabold mt-4 mb-6 text-[#151521]">New Dimensions</h2>
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                LBLFIBEBL empowers innovation in connectivity, semiconductor mobility, green energy, and healthcare with cutting-edge, high-precision tools for research and industry.
               </p>
               <button
                 onClick={() => onNavigate && onNavigate('who-we-are')}
-                className="btn-primary"
+                className="inline-block px-8 py-3 bg-[#151521] text-white hover:bg-[#0066FF] transition font-semibold"
               >
-                Company & Leadership
+                Company & Technology
               </button>
             </div>
-
-            <div className="relative aspect-video rounded-3xl overflow-hidden bg-slate-900 shadow-2xl border border-slate-800">
+            <div className="relative aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl">
               <video
                 ref={videoRef}
                 controls
@@ -207,17 +250,14 @@ export const HomePageComponent = ({ onNavigate, openTrialModal, openCheckoutModa
         </div>
       </section>
 
-      {/* ===== SOLUTIONS CARDS ===== */}
-      <section className="py-20 bg-slate-50 border-t border-slate-200">
-        <div className="container-custom space-y-12">
-          <div className="max-w-3xl space-y-3">
-            <span className="label-gray">Solutions</span>
-            <h2 className="text-3xl font-extrabold text-slate-900">
+      {/* ===== SOLUTIONS SECTION ===== */}
+      <section className="py-20 bg-[#F5F5F5]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-12">
+            <span className="text-[#0066FF] font-semibold uppercase text-sm tracking-wider">Solutions</span>
+            <h2 className="text-4xl md:text-5xl font-extrabold mt-2 text-[#151521]">
               Tackling Complex Challenges with Precision & Innovation
             </h2>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              From integrating complex lithography steps and Mix and Match solutions to stitch-free Patterning and advanced Process Control, our expertise ensures matchless nanofabrication quality.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -225,21 +265,17 @@ export const HomePageComponent = ({ onNavigate, openTrialModal, openCheckoutModa
               <button
                 key={idx}
                 onClick={() => onNavigate && onNavigate(solution.link)}
-                className="group bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-cyan-500/40 transition-all text-left flex flex-col justify-between"
+                className="group bg-white p-8 hover:shadow-xl transition rounded-2xl border border-gray-200 text-left flex flex-col justify-between"
               >
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 flex items-center justify-center font-bold text-xl">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066FF] flex items-center justify-center font-bold text-xl mb-4">
                     {solution.name.charAt(0)}
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-cyan-600 transition-colors">
-                    {solution.name}
-                  </h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    {solution.desc}
-                  </p>
+                  <h3 className="text-xl font-bold mb-2 text-[#151521] group-hover:text-[#0066FF] transition">{solution.name}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{solution.desc}</p>
                 </div>
-                <div className="pt-6 mt-6 border-t border-slate-100 text-xs font-bold text-cyan-600 group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                  Explore {solution.name} Solution →
+                <div className="mt-6 pt-4 border-t border-gray-100">
+                  <span className="text-[#0066FF] font-semibold text-xs group-hover:underline">{solution.name} Solution →</span>
                 </div>
               </button>
             ))}
@@ -249,47 +285,70 @@ export const HomePageComponent = ({ onNavigate, openTrialModal, openCheckoutModa
 
       {/* ===== NEWS SECTION ===== */}
       <section className="py-20 bg-white">
-        <div className="container-custom space-y-12">
-          <div className="max-w-3xl space-y-3">
-            <span className="label-gray">Latest News</span>
-            <h2 className="text-3xl font-extrabold text-slate-900">
-              Staying Updated: Latest News & Innovations
-            </h2>
-          </div>
+        <div className="max-w-7xl mx-auto px-6">
+          <span className="text-[#0066FF] font-semibold uppercase text-sm tracking-wider">News</span>
+          <h2 className="text-4xl md:text-5xl font-extrabold mt-4 mb-12 text-[#151521]">Staying Updated: Latest News & Innovations</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {newsData.map((news, idx) => (
               <button
                 key={idx}
                 onClick={() => onNavigate && onNavigate(news.link)}
-                className="group bg-slate-50 p-6 rounded-2xl border border-slate-200 hover:border-cyan-500/40 transition-all text-left space-y-3 flex flex-col justify-between"
+                className="group border-b-2 border-slate-200 hover:border-[#0066FF] pb-4 transition text-left space-y-2 flex flex-col justify-between"
               >
-                <div className="space-y-2">
-                  <span className="text-xs font-semibold text-cyan-600">{news.date}</span>
-                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-cyan-600 transition-colors leading-snug">
-                    {news.title}
-                  </h3>
+                <div>
+                  <p className="text-xs font-semibold text-[#0066FF] mb-2">{news.date}</p>
+                  <h3 className="text-base font-bold text-[#151521] group-hover:text-[#0066FF] transition leading-snug">{news.title}</h3>
                 </div>
-                <span className="text-xs font-bold text-cyan-600 pt-3 border-t border-slate-200">
-                  Read Article →
-                </span>
+                <span className="text-xs font-bold text-[#0066FF] pt-2">Read Article →</span>
               </button>
             ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <button
+              onClick={() => onNavigate && onNavigate('support')}
+              className="inline-block px-8 py-3 bg-[#151521] text-white hover:bg-[#0066FF] transition font-semibold"
+            >
+              All News & Support
+            </button>
           </div>
         </div>
       </section>
 
-      {/* ===== REFERENCES ===== */}
-      <section className="py-16 bg-slate-900 text-white">
-        <div className="container-custom space-y-8">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-cyan-400">Global Reputation</span>
-            <h2 className="text-2xl font-bold">Trusted by Customers Worldwide</h2>
+      {/* ===== COMMUNITY SECTION ===== */}
+      <section className="py-20 bg-[#F5F5F5]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="text-[#0066FF] font-semibold uppercase text-sm tracking-wider">Community</span>
+              <h2 className="text-4xl font-extrabold mt-4 mb-6 text-[#151521]">Join the LBLFIBEBL Community</h2>
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                As a member of our community you get access to exclusive software tools, expert technical support, and live symposia.
+              </p>
+              <button
+                onClick={openTrialModal}
+                className="inline-block px-8 py-3 bg-[#0066FF] text-white hover:bg-[#0052cc] transition font-semibold"
+              >
+                Request Free Access
+              </button>
+            </div>
+            <div className="bg-[#151521]/10 h-64 rounded-2xl flex items-center justify-center text-gray-500 font-semibold">
+              LBLFIBEBL Community Portal
+            </div>
           </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 items-center">
+      {/* ===== REFERENCES SECTION ===== */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <span className="text-[#0066FF] font-semibold uppercase text-sm tracking-wider">References</span>
+          <h2 className="text-4xl md:text-5xl font-extrabold mt-4 mb-12 text-[#151521]">Trusted by Customers Worldwide</h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 items-center">
             {referencesData.map((ref, idx) => (
-              <div key={idx} className="p-3 bg-slate-800/80 rounded-xl border border-slate-700 text-center text-xs font-bold text-slate-300 hover:text-white hover:border-cyan-500 transition-colors">
+              <div key={idx} className="p-3 bg-slate-100 rounded-xl border border-slate-200 text-center text-xs font-bold text-slate-700 hover:border-[#0066FF] transition">
                 {ref.name}
               </div>
             ))}
@@ -299,7 +358,7 @@ export const HomePageComponent = ({ onNavigate, openTrialModal, openCheckoutModa
 
     </div>
   );
-};
+}
 
-export const HomePage = HomePageComponent;
-export default HomePageComponent;
+export const HomePageComponent = HomePage;
+export default HomePage;
