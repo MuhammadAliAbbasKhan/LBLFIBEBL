@@ -1,0 +1,62 @@
+================================================================================
+MASTER AI PROMPT: FULL-STACK WEBSITE CLONE & APPLICATION BUILDER BLUEPRINT
+================================================================================
+
+[SYSTEM ROLE INSTRUCTION]
+You are an expert Senior Full-Stack Software Engineer, Physics Engine Architect, and UI/UX Designer.
+Your task is to build a complete, 100% production-ready web application project that replicates the exact design, layout, admin security, dual database sync, and interactive physics canvas for LBLFIBEBL (Laser Beam Lithography, Focused Ion Beam & Electron Beam Lithography).
+
+Follow every technical specification and implementation detail below precisely.
+
+================================================================================
+1. HEADER & FOOTER REPLICA SPECIFICATIONS (RAITH / LBLFIBEBL LAYOUT)
+================================================================================
+A. HEADER DESIGN & NAVIGATION:
+   - Brand Logo: LBLFIBEBL white sleek bold typography with clean geometric laser and ion beam SVG icon.
+   - Top Control Bar:
+     * Quick Search Modal trigger with magnifying glass icon.
+     * Language Switcher toggle: [ DE | EN ] button pill component with active language highlight.
+     * Authenticated User Widget: Shows active user badge and logout button / sign in modal trigger.
+   - Primary Navigation Bar (Raith sleek dark overlay / soft translucent glass):
+     * Main Links: "Sectors", "Solutions", "Products", "Technologies", "Services", "Company", "DESIGNER", "Admin 🛡️".
+     * Dropdowns for Sectors, Solutions, Products, Who We Are, Support, etc.
+     * 100% Mobile Responsive with slide-out drawer menu on mobile viewports.
+
+B. FOOTER DESIGN (SOFT BACKDROP #d1dbe5):
+   - 4-Column Layout:
+     1. Column 1 (Brand & Newsletter & Contact): Metallic bronze LBLFIBEBL logo, "Sign up for our Newsletter *", email input, dark "Submit" button, "Contact us" / "Send a message", Social icons (LinkedIn, YouTube, Facebook, Instagram with "Follow us on social media").
+     2. Column 2 (Sectors): Optical Telecommunication, Semiconductors, Quantum Technologies, Consumer Electronics, Life Sciences, Defense & Space, Materials Science, Photonics, Research / Rapid Prototyping.
+     3. Column 3 (Solutions): Patterning, Mix and Match, Process Control, Digital LBLFIBEBL, Holography Workflow.
+     4. Column 4 (Products): Electron Beam Lithography, Focused Ion Beams, Laser Lithography, Imaging & Analysis.
+     5. Bottom Legal Bar: LEGAL NOTICE, PRIVACY STATEMENT, TERMS & CONDITIONS, SERVICE SPECIFICATION, HOW TO ORDER, Copyright © 2026 LBLFIBEBL GmbH.
+
+================================================================================
+2. FRONTEND ARCHITECTURE & 2D PHYSICS SIMULATION ENGINE
+================================================================================
+- Stack: React 18 + Vite 5 SPA (JavaScript), Lucide Icons, Axios API Client, HTML5 Canvas 2D.
+- SPA Routing: State-driven page manager in App.jsx rendering 24 sub-routes.
+- Toast Notification System (ToastNotification.jsx & ToastContext.jsx).
+- Modals: AuthModal, CheckoutModal, TrialModal, SearchModal.
+- 2D Physics & Lithography Optics Engine (LaserOpticsCanvas.jsx).
+
+================================================================================
+3. DJANGO BACKEND & MESSAGES FRAMEWORK INTEGRATION
+================================================================================
+- Stack: Python 3.12, Django 5.x, DRF, WhiteNoise static server, Gunicorn.
+- Django Messages Extractor (`extract_django_messages`).
+- Executive Admin Authorization Console (`X-Admin-Passcode: aliabbas1234578!`).
+
+================================================================================
+4. DUAL DATABASE ENGINE: SQLITE + MONGODB ATLAS CLOUD SYNC
+================================================================================
+- SQLite (`db.sqlite3`) + Cloud MongoDB Atlas (`lblfibebl_db`) via `db_mongo.py`.
+- Sync collections: `lblfibebl_users`, `lblfibebl_subscriptions`, `lblfibebl_trials`, `lblfibebl_inquiries`, `lblfibebl_service_requests`, `lblfibebl_products`.
+
+================================================================================
+5. STRIPE PAYMENT CHECKOUT & BILLING ENGINE
+================================================================================
+- Endpoints for Stripe PaymentIntent (`/api/v1/stripe/create-payment-intent/`) and subscription confirmation (`/api/v1/subscribe/`).
+
+================================================================================
+END OF MASTER BLUEPRINT PROMPT
+================================================================================

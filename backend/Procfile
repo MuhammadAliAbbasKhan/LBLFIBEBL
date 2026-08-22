@@ -1,0 +1,1 @@
+web: gunicorn lblfibebl_backend.wsgi:application
