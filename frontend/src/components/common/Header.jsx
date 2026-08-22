@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, User, LogOut, Menu, X, ChevronDown, Shield, Zap } from 'lucide-react';
+import { Search, User, LogOut, Menu, X, ChevronDown, Zap } from 'lucide-react';
 
 export const Header = ({
   user,
@@ -161,24 +161,16 @@ export const Header = ({
               Company
             </button>
 
-            {/* DESIGNER Engine */}
+            {/* DESIGNER Engine (Premium Page) */}
             <button
               onClick={() => handleNav('designer')}
-              className={`px-3 py-1.5 rounded-lg font-bold tracking-tight flex items-center gap-1 transition-all shadow-sm ${
+              className={`px-3.5 py-1.5 rounded-lg font-bold tracking-tight flex items-center gap-1 transition-all shadow-sm ${
                 activeRoute === 'designer'
                   ? 'bg-[#0066FF] text-white'
                   : 'bg-blue-50 text-[#0066FF] border border-blue-200 hover:bg-blue-100'
               }`}
             >
               <Zap className="w-3.5 h-3.5" /> DESIGNER
-            </button>
-
-            {/* Admin Console Link */}
-            <button
-              onClick={() => handleNav('admin')}
-              className="px-2.5 py-1.5 text-amber-700 hover:text-amber-800 font-semibold text-xs flex items-center gap-1 bg-amber-50 border border-amber-200 rounded-lg transition-all"
-            >
-              <Shield className="w-3.5 h-3.5" /> Admin 🛡️
             </button>
           </nav>
 
@@ -295,12 +287,6 @@ export const Header = ({
               className="p-2.5 rounded-lg bg-slate-100 text-left text-slate-800 font-medium"
             >
               Services & Handbook
-            </button>
-            <button
-              onClick={() => handleNav('admin')}
-              className="p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-left text-amber-800 font-bold flex items-center gap-1 col-span-2"
-            >
-              <Shield className="w-4 h-4" /> Admin Console 🛡️
             </button>
           </div>
 
