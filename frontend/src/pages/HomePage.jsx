@@ -6,13 +6,41 @@ import "swiper/css/pagination";
 import LaserOpticsCanvas from "../components/simulator/LaserOpticsCanvas";
 
 // ============================================================================
-// COLOR CONSTANTS & DATA
+// IMAGE FALLBACK UTILITY
+// ============================================================================
+const handleImgError = (e, fallbackUrl) => {
+  e.target.onerror = null;
+  e.target.src = fallbackUrl || "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80";
+};
+
+// ============================================================================
+// NAVIGATION & SECTOR DATA
 // ============================================================================
 const sectorsData = [
-  { name: "Photonics", link: "applications", image: "https://raith.com/wp-content/uploads/2024/07/raith-photonics-divider-768x384.jpg?ver=1720184225" },
-  { name: "Semiconductors", link: "applications", image: "https://raith.com/wp-content/uploads/2024/06/raith-semiconductors-divider-768x432.jpg?ver=1720184266" },
-  { name: "Optical Telecommunication", link: "applications", image: "https://raith.com/wp-content/uploads/2024/06/raith-optical-telecommunication-divider-768x512.jpg?ver=1720184302" },
-  { name: "Quantum Technologies", link: "applications", image: "https://raith.com/wp-content/uploads/2024/06/raith-quantum-technology-divider-768x432.jpg" },
+  {
+    name: "Photonics",
+    link: "applications",
+    image: "https://raith.com/wp-content/uploads/2024/07/raith-photonics-divider-768x384.jpg?ver=1720184225",
+    fallback: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    name: "Semiconductors",
+    link: "applications",
+    image: "https://raith.com/wp-content/uploads/2024/06/raith-semiconductors-divider-768x432.jpg?ver=1720184266",
+    fallback: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    name: "Optical Telecommunication",
+    link: "applications",
+    image: "https://raith.com/wp-content/uploads/2024/06/raith-optical-telecommunication-divider-768x512.jpg?ver=1720184302",
+    fallback: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    name: "Quantum Technologies",
+    link: "applications",
+    image: "https://raith.com/wp-content/uploads/2024/06/raith-quantum-technology-divider-768x432.jpg",
+    fallback: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80",
+  },
 ];
 
 const solutionsData = [
@@ -31,7 +59,7 @@ const newsData = [
 ];
 
 const referencesData = [
-  { name: "CSIC", logo: "https://raith.com/wp-content/uploads/2025/01/CSIC.png" },
+  { name: "CSIC", logo: "https://raith.com/wp-content/uploads/2025/01/nanoGUNE.png" },
   { name: "CNR IMM", logo: "https://raith.com/wp-content/uploads/2025/01/CNR-IMM.png" },
   { name: "CBPF", logo: "https://raith.com/wp-content/uploads/2025/01/CBPF.png" },
   { name: "ISI Brno", logo: "https://raith.com/wp-content/uploads/2025/01/ISI-BRNO.png" },
@@ -49,11 +77,12 @@ const referencesData = [
   { name: "University of Paris", logo: "https://raith.com/wp-content/uploads/2025/01/Uni-Paris.png" },
 ];
 
-const footerLinks = {
-  sectors: ["Optical Telecommunication", "Semiconductors", "Quantum Technologies", "Consumer Electronics", "Life Sciences", "Defense & Space", "Materials Science", "Photonics", "Research / Rapid Prototyping"],
-  solutions: ["Patterning", "Mix and Match", "Process Control", "Digital LBLFIBEBL", "Holography Workflow"],
-  products: ["Electron Beam Lithography", "Focused Ion Beams", "Laser Lithography", "Imaging & Analysis"]
-};
+const slideBackgrounds = [
+  "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=80",
+  "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80",
+  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1600&q=80",
+  "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1600&q=80",
+];
 
 // ============================================================================
 // MAIN COMPONENT
@@ -90,9 +119,9 @@ export function HomePage({ onNavigate, openTrialModal, openCheckoutModal, user, 
           <SwiperSlide>
             <div
               className="relative h-full bg-cover bg-center flex items-center"
-              style={{ backgroundImage: "url('https://raith.com/wp-content/uploads/2024/06/rai_tech_platzhalter.jpg')" }}
+              style={{ backgroundImage: `url('${slideBackgrounds[0]}')` }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/60 to-transparent"></div>
               <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
                 <div className="max-w-2xl text-white">
                   <span className="inline-block px-3 py-1 mb-4 rounded-full bg-[#0066FF]/30 border border-[#0066FF] text-cyan-300 text-xs font-semibold uppercase tracking-wider">
@@ -119,9 +148,9 @@ export function HomePage({ onNavigate, openTrialModal, openCheckoutModal, user, 
           <SwiperSlide>
             <div
               className="relative h-full bg-cover bg-center flex items-center"
-              style={{ backgroundImage: "url('https://raith.com/wp-content/uploads/2024/06/raith-semiconductors-divider.jpg')" }}
+              style={{ backgroundImage: `url('${slideBackgrounds[1]}')` }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/60 to-transparent"></div>
               <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
                 <div className="max-w-2xl text-white">
                   <span className="inline-block px-3 py-1 mb-4 rounded-full bg-[#0066FF]/30 border border-[#0066FF] text-cyan-300 text-xs font-semibold uppercase tracking-wider">
@@ -148,9 +177,9 @@ export function HomePage({ onNavigate, openTrialModal, openCheckoutModal, user, 
           <SwiperSlide>
             <div
               className="relative h-full bg-cover bg-center flex items-center"
-              style={{ backgroundImage: "url('https://raith.com/wp-content/uploads/2024/07/raith-company-events-header.jpg')" }}
+              style={{ backgroundImage: `url('${slideBackgrounds[2]}')` }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/60 to-transparent"></div>
               <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
                 <div className="max-w-2xl text-white">
                   <span className="inline-block px-3 py-1 mb-4 rounded-full bg-[#0066FF]/30 border border-[#0066FF] text-cyan-300 text-xs font-semibold uppercase tracking-wider">
@@ -166,7 +195,7 @@ export function HomePage({ onNavigate, openTrialModal, openCheckoutModal, user, 
                     onClick={() => onNavigate && onNavigate('support')}
                     className="inline-block px-8 py-3.5 bg-[#0066FF] text-white hover:bg-[#0052cc] transition font-semibold"
                   >
-                    Events
+                    Events & Webinars
                   </button>
                 </div>
               </div>
@@ -177,9 +206,9 @@ export function HomePage({ onNavigate, openTrialModal, openCheckoutModal, user, 
           <SwiperSlide>
             <div
               className="relative h-full bg-cover bg-center flex items-center"
-              style={{ backgroundImage: "url('https://raith.com/wp-content/uploads/2025/12/1stsplace_MA25__Bonaldo_metalens.jpg')" }}
+              style={{ backgroundImage: `url('${slideBackgrounds[3]}')` }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/60 to-transparent"></div>
               <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
                 <div className="max-w-2xl text-white">
                   <span className="inline-block px-3 py-1 mb-4 rounded-full bg-[#0066FF]/30 border border-[#0066FF] text-cyan-300 text-xs font-semibold uppercase tracking-wider">
@@ -232,7 +261,13 @@ export function HomePage({ onNavigate, openTrialModal, openCheckoutModal, user, 
                 onClick={() => onNavigate && onNavigate(sector.link)}
                 className="group relative overflow-hidden aspect-[4/3] rounded-xl text-left bg-slate-900 shadow-md hover:shadow-xl transition"
               >
-                <img src={sector.image} alt={sector.name} className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition duration-500" />
+                <img
+                  src={sector.image}
+                  alt={sector.name}
+                  referrerPolicy="no-referrer"
+                  onError={(e) => handleImgError(e, sector.fallback)}
+                  className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition duration-500"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#151521]/90 via-[#151521]/30 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 text-white flex items-center justify-between right-6">
                   <h3 className="text-xl font-bold">{sector.name}</h3>
@@ -275,7 +310,7 @@ export function HomePage({ onNavigate, openTrialModal, openCheckoutModal, user, 
                 ref={videoRef}
                 controls
                 playsInline
-                poster="https://raith.com/wp-content/uploads/2024/07/rai-animation-thumb.jpg"
+                poster="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80"
                 className="w-full h-full object-cover"
               >
                 <source src="https://raith.com/wp-content/uploads/2024/07/raith-new-dimesnions-web3.mp4" type="video/mp4" />
@@ -286,8 +321,8 @@ export function HomePage({ onNavigate, openTrialModal, openCheckoutModal, user, 
       </section>
 
       {/* ===== SOLUTIONS SECTION ===== */}
-      <section className="relative py-20 bg-cover bg-center" style={{ backgroundImage: "url('https://raith.com/wp-content/uploads/2024/06/raith-home-solutions.jpg')" }}>
-        <div className="absolute inset-0 bg-black/70"></div>
+      <section className="relative py-20 bg-cover bg-center" style={{ backgroundImage: `url('${slideBackgrounds[1]}')` }}>
+        <div className="absolute inset-0 bg-black/75"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="text-white max-w-2xl">
             <span className="text-cyan-400 font-semibold uppercase text-sm tracking-wider">Solutions</span>
@@ -378,7 +413,12 @@ export function HomePage({ onNavigate, openTrialModal, openCheckoutModal, user, 
               </button>
             </div>
             <div className="relative h-64 rounded-2xl overflow-hidden shadow-lg">
-              <img src="https://raith.com/wp-content/uploads/2024/06/raith-company-registration-header-1024x683.jpg" alt="Community" className="w-full h-full object-cover" />
+              <img
+                src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80"
+                alt="Community"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>
@@ -393,7 +433,13 @@ export function HomePage({ onNavigate, openTrialModal, openCheckoutModal, user, 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 items-center">
             {referencesData.map((ref, idx) => (
               <div key={idx} className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center flex items-center justify-center h-20 hover:border-[#0066FF] transition">
-                <img src={ref.logo} alt={ref.name} className="max-h-12 w-auto object-contain" />
+                <img
+                  src={ref.logo}
+                  alt={ref.name}
+                  referrerPolicy="no-referrer"
+                  onError={(e) => handleImgError(e, `https://placehold.co/120x60/0B1329/FFFFFF?text=${encodeURIComponent(ref.name)}`)}
+                  className="max-h-12 w-auto object-contain"
+                />
               </div>
             ))}
           </div>
