@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ToastProvider, useToast } from './context/ToastContext';
+import { ToastProvider } from './context/ToastContext';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import AuthModal from './components/common/AuthModal';
@@ -168,8 +168,8 @@ function MainAppContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0b1329] text-gray-100 font-sans selection:bg-cyan-500 selection:text-white">
-      {/* Single Shared Header */}
+    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-900 font-sans selection:bg-[#0066FF] selection:text-white">
+      {/* Global White Header */}
       <Header
         user={user}
         onLogout={handleLogout}
@@ -184,7 +184,7 @@ function MainAppContent() {
         {renderActivePage()}
       </main>
 
-      {/* Single Shared Footer */}
+      {/* Global Raith Footer */}
       <Footer
         onNavigate={handleNavigate}
         openTrialModal={() => setTrialModalOpen(true)}

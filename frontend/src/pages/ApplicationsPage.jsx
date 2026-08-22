@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cpu, Zap, Layers, Globe, ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
+import { Cpu, Zap, Layers, Globe, ArrowRight, Sparkles, ShieldCheck } from 'lucide-react';
 
 export const ApplicationsPageComponent = ({ onNavigate, openTrialModal }) => {
   const sectors = [
@@ -12,35 +12,43 @@ export const ApplicationsPageComponent = ({ onNavigate, openTrialModal }) => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <h1 className="text-4xl font-extrabold text-white">
-          LBLFIBEBL Industry Applications & Sectors
-        </h1>
-        <p className="text-sm text-gray-300">
-          Discover how LBLFIBEBL systems drive state-of-the-art nanofabrication across telecom, semiconductor, and quantum optics industries worldwide.
-        </p>
-      </div>
+    <div className="bg-[#f8fafc] min-h-screen py-12">
+      {/* Subpage Header Banner */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm text-center max-w-4xl mx-auto space-y-4">
+          <span className="inline-block px-3 py-1 bg-blue-50 text-[#0066FF] border border-blue-200 rounded-full text-xs font-bold uppercase tracking-wider">
+            Sectors & Applications
+          </span>
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
+            LBLFIBEBL Industry Applications
+          </h1>
+          <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Discover how LBLFIBEBL systems drive state-of-the-art nanofabrication across telecom, semiconductor, and quantum optics industries worldwide.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {sectors.map((sec, idx) => {
-          const Icon = sec.icon;
-          return (
-            <div key={idx} className="bg-gray-900 border border-gray-800 rounded-3xl p-6 hover:border-cyan-500/40 transition-all space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center">
-                <Icon className="w-6 h-6" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sectors.map((sec, idx) => {
+            const Icon = sec.icon;
+            return (
+              <div key={idx} className="bg-white border border-slate-200 rounded-3xl p-6 hover:shadow-xl hover:border-[#0066FF] transition-all space-y-4 flex flex-col justify-between">
+                <div className="space-y-4">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#0066FF] border border-blue-100 flex items-center justify-center font-bold">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900">{sec.title}</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">{sec.desc}</p>
+                </div>
+                <button
+                  onClick={openTrialModal}
+                  className="text-xs font-bold text-[#0066FF] hover:underline flex items-center gap-1 pt-4 border-t border-slate-100"
+                >
+                  Request Application Note <ArrowRight className="w-3.5 h-3.5" />
+                </button>
               </div>
-              <h3 className="text-xl font-bold text-white">{sec.title}</h3>
-              <p className="text-xs text-gray-400 leading-relaxed">{sec.desc}</p>
-              <button
-                onClick={openTrialModal}
-                className="text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1"
-              >
-                Request Application Note <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
