@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Linkedin, Youtube, Facebook, Instagram, Send, Mail, MapPin, Phone, Shield } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { useToast } from '../../context/ToastContext';
 import apiService from '../../services/api';
 
@@ -83,24 +83,7 @@ export const Footer = ({ onNavigate, openTrialModal }) => {
               </button>
             </div>
 
-            {/* Social Icons */}
-            <div className="space-y-2 pt-2">
-              <div className="flex items-center space-x-3">
-                <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-slate-200 hover:bg-slate-900 hover:text-white transition-colors text-slate-700">
-                  <Linkedin className="w-4 h-4" />
-                </a>
-                <a href="https://youtube.com" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-slate-200 hover:bg-slate-900 hover:text-white transition-colors text-slate-700">
-                  <Youtube className="w-4 h-4" />
-                </a>
-                <a href="https://facebook.com" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-slate-200 hover:bg-slate-900 hover:text-white transition-colors text-slate-700">
-                  <Facebook className="w-4 h-4" />
-                </a>
-                <a href="https://instagram.com" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-slate-200 hover:bg-slate-900 hover:text-white transition-colors text-slate-700">
-                  <Instagram className="w-4 h-4" />
-                </a>
-              </div>
-              <p className="text-[11px] text-slate-600 font-medium">Follow us on social media</p>
-            </div>
+            {/* TODO: add verified social links */}
           </div>
 
           {/* Column 2: Sectors */}
